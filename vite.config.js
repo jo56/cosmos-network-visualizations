@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/cosmos-network-visualizaitons/',
+  base: '/cosmos-network-visualizations/',
   server: {
     port: 5173,
     open: true
