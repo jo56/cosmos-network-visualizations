@@ -1,0 +1,27 @@
+{
+  "name": "cosmos-network-visualizations",
+  "version": "1.0.0",
+  "description": "Interactive network visualizations using cosmos.gl with 10 complex network graphs",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "network",
+    "visualization",
+    "cosmos.gl",
+    "graph",
+    "webgl"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@cosmos.gl/graph": "^2.3.1"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
+
