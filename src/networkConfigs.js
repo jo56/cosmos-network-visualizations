@@ -15,8 +15,8 @@ export const networkConfigs = [
     nodeSize: 4,
     linkWidth: 0.6, // Thinner links for better performance
     spaceSize: 3072,
-    simulationFriction: 0.25, // Increased for faster settling
-    simulationGravity: 0.1, // Minimum to prevent drift
+    simulationFriction: 0.85, // Standard friction for smooth convergence
+    simulationGravity: 0.3, // Strong gravity to prevent drift
     simulationRepulsion: 0.6,
     simulationLinkSpring: 0.5,
     curvedLinks: true,
@@ -48,7 +48,7 @@ export const networkConfigs = [
     nodeSize: 3.5,
     linkWidth: 0.7,
     spaceSize: 3072,
-    simulationFriction: 0.28,
+    simulationFriction: 0.85, // Standard friction for smooth convergence
     simulationGravity: 0.3, // Increased to keep centered
     simulationRepulsion: 0.6,
     simulationLinkSpring: 0.6,
@@ -75,8 +75,8 @@ export const networkConfigs = [
     nodeSize: 3,
     linkWidth: 0.6,
     spaceSize: 3584,
-    simulationFriction: 0.25,
-    simulationGravity: 0.1, // Minimum to prevent drift
+    simulationFriction: 0.85, // Standard friction for smooth convergence
+    simulationGravity: 0.3, // Strong gravity to prevent drift
     simulationRepulsion: 0.7,
     simulationLinkSpring: 0.45,
     curvedLinks: false,
@@ -99,7 +99,7 @@ export const networkConfigs = [
     nodeSize: 4.5,
     linkWidth: 1.0,
     spaceSize: 3072,
-    simulationFriction: 0.3,
+    simulationFriction: 0.8, // Standard friction for smooth convergence
     simulationGravity: 0.4,
     simulationRepulsion: 0.5,
     simulationLinkSpring: 0.8,
@@ -127,7 +127,7 @@ export const networkConfigs = [
     nodeSize: 3.8,
     linkWidth: 0.8,
     spaceSize: 3072,
-    simulationFriction: 0.26,
+    simulationFriction: 0.8, // Standard friction for smooth convergence
     simulationGravity: 0.25, // Increased to keep centered
     simulationRepulsion: 0.65,
     simulationLinkSpring: 0.65,
@@ -176,7 +176,7 @@ export const networkConfigs = [
     nodeSize: 3.2,
     linkWidth: 0.7,
     spaceSize: 2560,
-    simulationFriction: 0.28,
+    simulationFriction: 0.85, // Standard friction for smooth convergence
     simulationGravity: 0.35, // Increased to keep centered
     simulationRepulsion: 0.6,
     simulationLinkSpring: 0.75,
@@ -202,7 +202,7 @@ export const networkConfigs = [
     nodeSize: 3.5,
     linkWidth: 0.7,
     spaceSize: 3072,
-    simulationFriction: 0.3,
+    simulationFriction: 0.75, // Standard friction for smooth convergence
     simulationGravity: 0.55, // Increased to keep centered
     simulationRepulsion: 0.4,
     simulationLinkSpring: 0.9,
@@ -232,8 +232,8 @@ export const networkConfigs = [
     nodeSize: 4.0,
     linkWidth: 0.6, // Thinner links for better performance
     spaceSize: 3072,
-    simulationFriction: 0.26,
-    simulationGravity: 0.1, // Minimum to prevent drift
+    simulationFriction: 0.8, // Standard friction for smooth convergence
+    simulationGravity: 0.3, // Strong gravity to prevent drift
     simulationRepulsion: 0.7,
     simulationLinkSpring: 0.6,
     curvedLinks: true,
@@ -259,7 +259,7 @@ export const networkConfigs = [
     nodeSize: (node) => node.group === 0 ? 8 : 3,
     linkWidth: 1.0,
     spaceSize: 3072,
-    simulationFriction: 0.28,
+    simulationFriction: 0.85, // Standard friction for smooth convergence
     simulationGravity: 0.45, // Increased to keep centered
     simulationRepulsion: 0.6,
     simulationLinkSpring: 0.75,
@@ -286,7 +286,7 @@ export const networkConfigs = [
     nodeSize: 3.6,
     linkWidth: 0.7,
     spaceSize: 3584,
-    simulationFriction: 0.25,
+    simulationFriction: 0.85, // Standard friction for smooth convergence
     simulationGravity: 0.25, // Increased to keep centered
     simulationRepulsion: 0.65,
     simulationLinkSpring: 0.6,

@@ -142,17 +142,17 @@ async function switchNetwork(index) {
       backgroundColor: config.backgroundColor,
       pointDefaultColor: config.pointDefaultColor,
       simulationFriction: config.simulationFriction,
-      // Increase gravity to keep graph centered and prevent drift
-      simulationGravity: Math.max(config.simulationGravity, 0.1),
+      // Significantly increase gravity to keep graph centered and prevent drift
+      simulationGravity: Math.max(config.simulationGravity, 0.3),
       simulationRepulsion: config.simulationRepulsion,
       simulationLinkSpring: config.simulationLinkSpring || 0.5,
       simulationRepulsionTheta: 0.8,
       curvedLinks: config.curvedLinks,
       scalePointsOnZoom: config.scalePointsOnZoom !== false,
-      fitViewOnInit: true,
-      fitViewDelay: 800, // Increased delay to let simulation settle
-      fitViewPadding: 0.2, // Increased padding for better view
-      rescalePositions: true, // Keep this to ensure proper scaling
+      fitViewOnInit: true, // Enable auto-fit to center the visualization
+      fitViewDelay: 1000,
+      fitViewPadding: 0.2,
+      rescalePositions: false, // Positions are already correctly scaled to spaceSize
       enableDrag: true,
       enableZoom: true,
       enablePan: true,
@@ -180,32 +180,38 @@ async function switchNetwork(index) {
       } else {
         // Generate initial positions based on network type
         if (index === 5) { // Ring network - circular layout
+          const center = config.spaceSize / 2;
           const angle = (i / data.nodes.length) * Math.PI * 2;
-          const radius = config.spaceSize * 0.35;
-          pointPositions[i * 2] = Math.cos(angle) * radius;
-          pointPositions[i * 2 + 1] = Math.sin(angle) * radius;
+          const radius = config.spaceSize * 0.2; // Even smaller radius
+          pointPositions[i * 2] = center + Math.cos(angle) * radius;
+          pointPositions[i * 2 + 1] = center + Math.sin(angle) * radius;
         } else if (index === 6) { // Grid network - grid layout
+          const center = config.spaceSize / 2;
           const gridWidth = 30; // Match the grid width from network generation
           const x = (i % gridWidth) - gridWidth / 2;
           const y = Math.floor(i / gridWidth) - gridWidth / 2;
-          pointPositions[i * 2] = x * (config.spaceSize / gridWidth * 0.8);
-          pointPositions[i * 2 + 1] = y * (config.spaceSize / gridWidth * 0.8);
+          const spacing = config.spaceSize / gridWidth * 0.5; // Even tighter spacing
+          pointPositions[i * 2] = center + x * spacing;
+          pointPositions[i * 2 + 1] = center + y * spacing;
         } else if (index === 8) { // Star network - radial layout
+          const center = config.spaceSize / 2;
           if (node.group === 0) {
             // Hub at center
-            pointPositions[i * 2] = 0;
-            pointPositions[i * 2 + 1] = 0;
+            pointPositions[i * 2] = center;
+            pointPositions[i * 2 + 1] = center;
           } else {
             // Spokes in circle
             const angle = ((i - 1) / (data.nodes.length - 1)) * Math.PI * 2;
-            const radius = config.spaceSize * 0.4;
-            pointPositions[i * 2] = Math.cos(angle) * radius;
-            pointPositions[i * 2 + 1] = Math.sin(angle) * radius;
+            const radius = config.spaceSize * 0.25; // Smaller radius
+            pointPositions[i * 2] = center + Math.cos(angle) * radius;
+            pointPositions[i * 2 + 1] = center + Math.sin(angle) * radius;
           }
         } else {
-          // Random initial positions
-          pointPositions[i * 2] = (Math.random() - 0.5) * config.spaceSize;
-          pointPositions[i * 2 + 1] = (Math.random() - 0.5) * config.spaceSize;
+          // Random initial positions - clustered at center of space
+          const center = config.spaceSize / 2;
+          const spread = config.spaceSize * 0.1; // Small initial spread
+          pointPositions[i * 2] = center + (Math.random() - 0.5) * spread;
+          pointPositions[i * 2 + 1] = center + (Math.random() - 0.5) * spread;
         }
       }
       
@@ -263,11 +269,11 @@ async function switchNetwork(index) {
     // Render
     graphInstance.render();
 
-    // Hide loading after a short delay
+    // Hide loading indicator after a short delay
     setTimeout(() => {
       loadingElement.style.display = 'none';
       isLoading = false;
-    }, 500);
+    }, 800);
 
   } catch (error) {
     console.error('Error loading network:', error);
@@ -308,6 +314,12 @@ function handleKeyPress(event) {
 // Initialize application
 function init() {
   initializeNavigation();
+  
+  // Pre-generate first network data to avoid slow initial load
+  if (!networkData[0]) {
+    const generator = getAllNetworks()[0];
+    networkData[0] = generator();
+  }
   
   // Load first network
   switchNetwork(0);
