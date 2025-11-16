@@ -149,9 +149,8 @@ async function switchNetwork(index) {
       simulationRepulsionTheta: 0.8,
       curvedLinks: config.curvedLinks,
       scalePointsOnZoom: config.scalePointsOnZoom !== false,
-      fitViewOnInit: true, // Enable auto-fit to center the visualization
-      fitViewDelay: 1000,
-      fitViewPadding: 0.2,
+      fitViewOnInit: false, // Disable auto-fit to prevent zoom animation
+      initialZoomLevel: 2, // Start zoomed in without animation
       rescalePositions: false, // Positions are already correctly scaled to spaceSize
       enableDrag: true,
       enableZoom: true,
