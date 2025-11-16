@@ -269,11 +269,10 @@ async function switchNetwork(index) {
     // Render
     graphInstance.render();
 
-    // Hide loading indicator after a short delay
-    setTimeout(() => {
-      loadingElement.style.display = 'none';
-      isLoading = false;
-    }, 800);
+    // Hide loading and show info panel immediately
+    loadingElement.style.display = 'none';
+    infoPanel.style.display = 'block';
+    isLoading = false;
 
   } catch (error) {
     console.error('Error loading network:', error);
