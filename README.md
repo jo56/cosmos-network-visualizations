@@ -1,5 +1,10 @@
 # Cosmos.gl Network Visualizations
 
+<div align="center">
+          <img src="assets/initial-cosmos-screenshot.png" alt="initial cosmos screenshot">
+     </div>
+    <br>
+
 An interactive web application featuring 10 highly complex and massive network visualizations built with [cosmos.gl](https://github.com/cosmosgl/graph), a GPU-accelerated graph visualization library.
 
 ## Network Types
