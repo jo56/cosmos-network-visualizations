@@ -21,7 +21,7 @@ const navContainer = document.getElementById('nav-container');
 
 // Application state
 let graphInstance = null;
-let currentNetworkIndex = 0;
+let currentNetworkIndex = -1;
 let networkData = [];
 let isLoading = false;
 
