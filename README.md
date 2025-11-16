@@ -2,14 +2,6 @@
 
 An interactive web application featuring 10 highly complex and massive network visualizations built with [cosmos.gl](https://github.com/cosmosgl/graph), a GPU-accelerated graph visualization library.
 
-## Features
-
-- 🚀 **10 Complex Network Visualizations** - Each with unique topologies and thousands of nodes
-- 🎨 **Seamless Switching** - Switch between visualizations instantly in your browser
-- ⚡ **GPU-Accelerated** - Powered by WebGL for smooth performance with large networks
-- 🖱️ **Interactive** - Drag nodes, zoom, pan, and explore the networks
-- 📱 **Responsive** - Works on desktop and modern browsers
-
 ## Network Types
 
 1. **Scale-Free Network** - Barabási–Albert model with preferential attachment
@@ -86,7 +78,4 @@ cosmos-test/
 
 MIT License - feel free to use this project for any purpose.
 
-## Contributing
-
-Contributions are welcome! Feel free to submit issues or pull requests.
 
