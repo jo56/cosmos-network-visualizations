@@ -64,7 +64,6 @@ function initializeNavigation() {
     }
     
     button.innerHTML = `
-      <span class="nav-icon">${config.icon}</span>
       <span class="nav-label">${config.name}</span>
       <span class="nav-number">${index + 1}</span>
     `;
@@ -143,16 +142,17 @@ async function switchNetwork(index) {
       backgroundColor: config.backgroundColor,
       pointDefaultColor: config.pointDefaultColor,
       simulationFriction: config.simulationFriction,
-      simulationGravity: config.simulationGravity,
+      // Increase gravity to keep graph centered and prevent drift
+      simulationGravity: Math.max(config.simulationGravity, 0.1),
       simulationRepulsion: config.simulationRepulsion,
       simulationLinkSpring: config.simulationLinkSpring || 0.5,
-      simulationRepulsionTheta: 0.5,
+      simulationRepulsionTheta: 0.8,
       curvedLinks: config.curvedLinks,
       scalePointsOnZoom: config.scalePointsOnZoom !== false,
       fitViewOnInit: true,
-      fitViewDelay: 800,
-      fitViewPadding: 0.15,
-      rescalePositions: true,
+      fitViewDelay: 800, // Increased delay to let simulation settle
+      fitViewPadding: 0.2, // Increased padding for better view
+      rescalePositions: true, // Keep this to ensure proper scaling
       enableDrag: true,
       enableZoom: true,
       enablePan: true,
@@ -185,7 +185,7 @@ async function switchNetwork(index) {
           pointPositions[i * 2] = Math.cos(angle) * radius;
           pointPositions[i * 2 + 1] = Math.sin(angle) * radius;
         } else if (index === 6) { // Grid network - grid layout
-          const gridWidth = 40; // Match the grid width from network generation
+          const gridWidth = 30; // Match the grid width from network generation
           const x = (i % gridWidth) - gridWidth / 2;
           const y = Math.floor(i / gridWidth) - gridWidth / 2;
           pointPositions[i * 2] = x * (config.spaceSize / gridWidth * 0.8);

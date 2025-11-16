@@ -1,11 +1,8 @@
 /**
  * Network Data Generators
  * Creates 10 different complex network topologies
- * Optimized for performance with reduced node counts
+ * Optimized for performance with reduced node counts and link density
  */
-
-// Helper function to generate random integer
-const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 /**
  * 1. Scale-Free Network (Barabási–Albert model)
@@ -14,9 +11,9 @@ const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + mi
 export function generateScaleFreeNetwork() {
   const nodes = [];
   const links = [];
-  const nodeCount = 1200; // Reduced from 5000
+  const nodeCount = 600; // Further reduced for performance
   const initialNodes = 5;
-  const linksPerNewNode = 3;
+  const linksPerNewNode = 2; // Reduced from 3
 
   // Initialize initial nodes
   for (let i = 0; i < initialNodes; i++) {
@@ -45,7 +42,7 @@ export function generateScaleFreeNetwork() {
     nodes.push({
       id: i,
       label: `Node ${i}`,
-      group: Math.floor(i / 50)
+      group: Math.floor(i / 30)
     });
 
     const totalDegree = degrees.reduce((a, b) => a + b, 0);
@@ -76,8 +73,8 @@ export function generateScaleFreeNetwork() {
 export function generateSmallWorldNetwork() {
   const nodes = [];
   const links = [];
-  const nodeCount = 1000; // Reduced from 4000
-  const k = 6; // Each node connected to k nearest neighbors
+  const nodeCount = 500; // Further reduced
+  const k = 4; // Reduced from 6
   const p = 0.1; // Rewiring probability
 
   // Create nodes
@@ -85,7 +82,7 @@ export function generateSmallWorldNetwork() {
     nodes.push({
       id: i,
       label: `Node ${i}`,
-      group: Math.floor(i / 100)
+      group: Math.floor(i / 50)
     });
   }
 
@@ -125,15 +122,15 @@ export function generateSmallWorldNetwork() {
 export function generateRandomNetwork() {
   const nodes = [];
   const links = [];
-  const nodeCount = 1500; // Reduced from 6000
-  const p = 0.002; // Probability of edge between any two nodes
+  const nodeCount = 700; // Further reduced
+  const p = 0.003; // Slightly increased for visibility
 
   // Create nodes
   for (let i = 0; i < nodeCount; i++) {
     nodes.push({
       id: i,
       label: `Node ${i}`,
-      group: Math.floor(i / 150)
+      group: Math.floor(i / 70)
     });
   }
 
@@ -142,7 +139,7 @@ export function generateRandomNetwork() {
   const expectedLinks = Math.floor((nodeCount * (nodeCount - 1) / 2) * p);
   let linkCount = 0;
   
-  while (linkCount < expectedLinks * 1.1) { // Generate slightly more to account for randomness
+  while (linkCount < expectedLinks) {
     const i = Math.floor(Math.random() * nodeCount);
     const j = Math.floor(Math.random() * nodeCount);
     if (i !== j) {
@@ -166,8 +163,8 @@ export function generateRandomNetwork() {
 export function generateHierarchicalNetwork() {
   const nodes = [];
   const links = [];
-  const levels = 4; // Reduced from 5
-  const branchingFactor = 4;
+  const levels = 4;
+  const branchingFactor = 3; // Reduced from 4
   let nodeId = 0;
 
   function createLevel(parentId, level, maxLevel) {
@@ -185,8 +182,8 @@ export function generateHierarchicalNetwork() {
         links.push({ source: parentId, target: id, value: 1 });
       }
 
-      // Add some cross-connections within same level
-      if (level > 0 && Math.random() < 0.15) {
+      // Add some cross-connections within same level - reduced
+      if (level > 0 && Math.random() < 0.1) {
         const siblings = nodes.filter(n => n.group === level && n.id !== id);
         if (siblings.length > 0) {
           const sibling = siblings[Math.floor(Math.random() * siblings.length)];
@@ -206,7 +203,7 @@ export function generateHierarchicalNetwork() {
   createLevel(null, 0, levels);
 
   // Add more nodes to reach target size
-  const targetSize = 800;
+  const targetSize = 500;
   const additionalNodes = Math.max(0, targetSize - nodeId);
   for (let i = nodeId; i < nodeId + additionalNodes; i++) {
     const parent = nodes[Math.floor(Math.random() * nodes.length)];
@@ -228,10 +225,9 @@ export function generateHierarchicalNetwork() {
 export function generateModularNetwork() {
   const nodes = [];
   const links = [];
-  const communities = 12; // Reduced from 20
-  const nodesPerCommunity = 100; // Reduced from 300
-  const intraCommunityDensity = 0.2; // Increased for visibility
-  const interCommunityDensity = 0.002;
+  const communities = 8; // Reduced from 12
+  const nodesPerCommunity = 60; // Reduced from 100
+  const intraCommunityDensity = 0.25; // Increased for visibility with fewer nodes
 
   let nodeId = 0;
 
@@ -264,15 +260,17 @@ export function generateModularNetwork() {
     }
   }
 
-  // Inter-community links (sparse) - optimized
-  const interLinkCount = Math.floor(nodes.length * nodes.length * interCommunityDensity);
+  // Inter-community links (sparse) - minimal
+  const interLinkCount = Math.floor(communities * 2); // Just a few connections between communities
   const linkSet = new Set();
   let interLinks = 0;
   
   while (interLinks < interLinkCount) {
-    const i = Math.floor(Math.random() * nodes.length);
-    const j = Math.floor(Math.random() * nodes.length);
-    if (nodes[i].group !== nodes[j].group) {
+    const c1 = Math.floor(Math.random() * communities);
+    const c2 = Math.floor(Math.random() * communities);
+    if (c1 !== c2) {
+      const i = c1 * nodesPerCommunity + Math.floor(Math.random() * nodesPerCommunity);
+      const j = c2 * nodesPerCommunity + Math.floor(Math.random() * nodesPerCommunity);
       const key1 = `${i},${j}`;
       const key2 = `${j},${i}`;
       if (!linkSet.has(key1) && !linkSet.has(key2)) {
@@ -293,16 +291,16 @@ export function generateModularNetwork() {
 export function generateRingNetwork() {
   const nodes = [];
   const links = [];
-  const nodeCount = 1200; // Reduced from 5000
-  const skipConnections = 3; // Connect to nodes skipConnections away
-  const randomConnections = 0.03; // Reduced probability
+  const nodeCount = 600; // Further reduced
+  const skipConnections = 2; // Reduced from 3
+  const randomConnections = 0.02; // Reduced
 
   // Create nodes
   for (let i = 0; i < nodeCount; i++) {
     nodes.push({
       id: i,
       label: `Node ${i}`,
-      group: Math.floor(i / 200)
+      group: Math.floor(i / 100)
     });
   }
 
@@ -323,7 +321,7 @@ export function generateRingNetwork() {
 
   for (let i = 0; i < nodeCount; i++) {
     for (let skip = 2; skip <= skipConnections; skip++) {
-      if (Math.random() < 0.3) {
+      if (Math.random() < 0.2) { // Reduced probability
         const target = (i + skip) % nodeCount;
         const key = `${i},${target}`;
         if (!linkSet.has(key)) {
@@ -334,8 +332,8 @@ export function generateRingNetwork() {
     }
   }
 
-  // Add random connections - optimized
-  const randomLinkCount = Math.floor(nodeCount * nodeCount * randomConnections);
+  // Add random connections - minimal
+  const randomLinkCount = Math.floor(nodeCount * 0.5); // Very few random links
   let randomLinks = 0;
   while (randomLinks < randomLinkCount) {
     const i = Math.floor(Math.random() * nodeCount);
@@ -361,8 +359,8 @@ export function generateRingNetwork() {
 export function generateGridNetwork() {
   const nodes = [];
   const links = [];
-  const width = 40; // Reduced from 80
-  const height = 30; // Reduced from 60
+  const width = 30; // Reduced from 40
+  const height = 20; // Reduced from 30
   const includeDiagonals = true;
 
   // Create nodes in grid
@@ -372,7 +370,7 @@ export function generateGridNetwork() {
       nodes.push({
         id: id,
         label: `(${x},${y})`,
-        group: Math.floor(y / 5)
+        group: Math.floor(y / 4)
       });
     }
   }
@@ -392,20 +390,20 @@ export function generateGridNetwork() {
         links.push({ source: id, target: id + width, value: 1 });
       }
 
-      // Diagonal connections
-      if (includeDiagonals) {
-        if (x < width - 1 && y < height - 1 && Math.random() < 0.3) {
+      // Diagonal connections - reduced
+      if (includeDiagonals && Math.random() < 0.2) { // Reduced probability
+        if (x < width - 1 && y < height - 1) {
           links.push({ source: id, target: id + width + 1, value: 0.7 });
         }
-        if (x > 0 && y < height - 1 && Math.random() < 0.3) {
+        if (x > 0 && y < height - 1) {
           links.push({ source: id, target: id + width - 1, value: 0.7 });
         }
       }
     }
   }
 
-  // Add some random long-range connections - optimized
-  const longRangeCount = Math.floor(nodes.length * 0.01);
+  // Add some random long-range connections - minimal
+  const longRangeCount = Math.floor(nodes.length * 0.005); // Very few
   const linkSet = new Set();
   links.forEach(link => {
     linkSet.add(`${link.source},${link.target}`);
@@ -436,9 +434,9 @@ export function generateGridNetwork() {
 export function generateBipartiteNetwork() {
   const nodes = [];
   const links = [];
-  const groupASize = 600; // Reduced from 2500
-  const groupBSize = 600; // Reduced from 2500
-  const connectionProbability = 0.003; // Slightly increased for visibility
+  const groupASize = 300; // Further reduced
+  const groupBSize = 300; // Further reduced
+  const connectionProbability = 0.004; // Slightly increased for visibility
 
   // Create group A nodes
   for (let i = 0; i < groupASize; i++) {
@@ -474,17 +472,17 @@ export function generateBipartiteNetwork() {
     }
   }
 
-  // Add some intra-group connections (making it near-bipartite) - minimal
-  for (let i = 0; i < groupASize; i += 50) {
-    for (let j = i + 1; j < Math.min(i + 5, groupASize); j++) {
+  // Minimal intra-group connections
+  for (let i = 0; i < groupASize; i += 100) {
+    for (let j = i + 1; j < Math.min(i + 3, groupASize); j++) {
       if (Math.random() < 0.1) {
         links.push({ source: i, target: j, value: 0.3 });
       }
     }
   }
 
-  for (let i = 0; i < groupBSize; i += 50) {
-    for (let j = i + 1; j < Math.min(i + 5, groupBSize); j++) {
+  for (let i = 0; i < groupBSize; i += 100) {
+    for (let j = i + 1; j < Math.min(i + 3, groupBSize); j++) {
       if (Math.random() < 0.1) {
         links.push({ 
           source: groupASize + i, 
@@ -505,9 +503,9 @@ export function generateBipartiteNetwork() {
 export function generateStarNetwork() {
   const nodes = [];
   const links = [];
-  const hubCount = 5; // Reduced from 10
-  const nodesPerHub = 200; // Reduced from 500
-  const interHubConnections = 0.2; // Increased for visibility
+  const hubCount = 3; // Reduced from 5
+  const nodesPerHub = 150; // Reduced from 200
+  const interHubConnections = 0.3; // Increased for visibility
 
   let nodeId = 0;
 
@@ -544,9 +542,9 @@ export function generateStarNetwork() {
       // Connect to hub
       links.push({ source: hubs[h], target: nodeId, value: 1 });
 
-      // Some peripheral nodes connect to each other - reduced
-      if (Math.random() < 0.01) {
-        const otherPeripheral = nodeId - Math.floor(Math.random() * Math.min(i + 1, 20)) - 1;
+      // Minimal peripheral connections
+      if (Math.random() < 0.005) { // Very few
+        const otherPeripheral = nodeId - Math.floor(Math.random() * Math.min(i + 1, 10)) - 1;
         if (otherPeripheral > hubs[h] && nodes[otherPeripheral] && nodes[otherPeripheral].group === h + 1) {
           links.push({ source: nodeId, target: otherPeripheral, value: 0.5 });
         }
@@ -569,7 +567,7 @@ export function generateHybridNetwork() {
   let nodeId = 0;
 
   // Create a scale-free core
-  const coreSize = 400; // Reduced from 1000
+  const coreSize = 200; // Reduced from 400
   const coreNodes = [];
   for (let i = 0; i < coreSize; i++) {
     nodes.push({
@@ -581,11 +579,11 @@ export function generateHybridNetwork() {
     nodeId++;
   }
 
-  // Connect core nodes (scale-free like)
+  // Connect core nodes (scale-free like) - reduced connections
   for (let i = 1; i < coreSize; i++) {
     const target = Math.floor(Math.random() * i);
     links.push({ source: i, target: target, value: 1 });
-    if (Math.random() < 0.3) {
+    if (Math.random() < 0.2) { // Reduced probability
       const target2 = Math.floor(Math.random() * i);
       if (target2 !== target) {
         links.push({ source: i, target: target2, value: 0.8 });
@@ -594,8 +592,8 @@ export function generateHybridNetwork() {
   }
 
   // Add modular communities
-  const communities = 8; // Reduced from 15
-  const nodesPerCommunity = 100; // Reduced from 300
+  const communities = 5; // Reduced from 8
+  const nodesPerCommunity = 60; // Reduced from 100
   for (let c = 0; c < communities; c++) {
     const communityNodes = [];
     for (let i = 0; i < nodesPerCommunity; i++) {
@@ -608,10 +606,10 @@ export function generateHybridNetwork() {
       nodeId++;
     }
 
-    // Dense intra-community connections - optimized
+    // Dense intra-community connections - reduced
     for (let i = 0; i < communityNodes.length; i++) {
       for (let j = i + 1; j < communityNodes.length; j++) {
-        if (Math.random() < 0.15) {
+        if (Math.random() < 0.2) { // Reduced from 0.15
           links.push({ 
             source: communityNodes[i], 
             target: communityNodes[j], 
@@ -622,7 +620,7 @@ export function generateHybridNetwork() {
     }
 
     // Connect community to core
-    const hubConnections = 3; // Reduced from 5
+    const hubConnections = 2; // Reduced from 3
     for (let i = 0; i < hubConnections; i++) {
       const coreNode = coreNodes[Math.floor(Math.random() * coreNodes.length)];
       const communityNode = communityNodes[Math.floor(Math.random() * communityNodes.length)];
@@ -630,8 +628,8 @@ export function generateHybridNetwork() {
     }
   }
 
-  // Add some random long-range connections - optimized
-  const randomLinkCount = Math.floor(nodes.length * 0.001);
+  // Minimal random long-range connections
+  const randomLinkCount = Math.floor(nodes.length * 0.0005);
   const linkSet = new Set();
   links.forEach(link => {
     linkSet.add(`${link.source},${link.target}`);

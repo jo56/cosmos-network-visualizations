@@ -9,16 +9,16 @@ export const networkConfigs = [
   {
     name: 'Scale-Free Network',
     description: 'Barabási–Albert model with preferential attachment. Features power-law degree distribution with highly connected hubs.',
-    icon: '⚡',
+    icon: '',
     backgroundColor: '#0a0a1a',
     pointDefaultColor: '#00ffff',
     nodeSize: 4,
-    linkWidth: 1.2,
-    spaceSize: 4096,
-    simulationFriction: 0.12,
-    simulationGravity: 0,
-    simulationRepulsion: 0.7,
-    simulationLinkSpring: 0.6,
+    linkWidth: 0.6, // Thinner links for better performance
+    spaceSize: 3072,
+    simulationFriction: 0.25, // Increased for faster settling
+    simulationGravity: 0.1, // Minimum to prevent drift
+    simulationRepulsion: 0.6,
+    simulationLinkSpring: 0.5,
     curvedLinks: true,
     scalePointsOnZoom: true,
     getNodeColor: (node, index, total, nodeDegrees) => {
@@ -42,16 +42,16 @@ export const networkConfigs = [
   {
     name: 'Small World Network',
     description: 'Watts–Strogatz model with high clustering and short path lengths. Dense local connections with occasional long-range links.',
-    icon: '🌐',
+    icon: '',
     backgroundColor: '#001122',
     pointDefaultColor: '#00aaff',
     nodeSize: 3.5,
-    linkWidth: 1.0,
-    spaceSize: 4096,
-    simulationFriction: 0.15,
-    simulationGravity: 0.2,
-    simulationRepulsion: 0.65,
-    simulationLinkSpring: 0.7,
+    linkWidth: 0.7,
+    spaceSize: 3072,
+    simulationFriction: 0.28,
+    simulationGravity: 0.3, // Increased to keep centered
+    simulationRepulsion: 0.6,
+    simulationLinkSpring: 0.6,
     curvedLinks: true,
     scalePointsOnZoom: true,
     getNodeColor: (node, index) => {
@@ -69,16 +69,16 @@ export const networkConfigs = [
   {
     name: 'Random Network',
     description: 'Erdős–Rényi model with random connections. Poisson degree distribution with uniform connectivity.',
-    icon: '🎲',
+    icon: '',
     backgroundColor: '#000000',
     pointDefaultColor: '#00ff00',
     nodeSize: 3,
-    linkWidth: 0.8,
-    spaceSize: 5120,
-    simulationFriction: 0.12,
-    simulationGravity: 0,
-    simulationRepulsion: 0.8,
-    simulationLinkSpring: 0.5,
+    linkWidth: 0.6,
+    spaceSize: 3584,
+    simulationFriction: 0.25,
+    simulationGravity: 0.1, // Minimum to prevent drift
+    simulationRepulsion: 0.7,
+    simulationLinkSpring: 0.45,
     curvedLinks: false,
     scalePointsOnZoom: true,
     getNodeColor: (node, index) => {
@@ -93,16 +93,16 @@ export const networkConfigs = [
   {
     name: 'Hierarchical Network',
     description: 'Tree-like structure with multiple levels. Parent-child relationships with some cross-level connections.',
-    icon: '🌳',
+    icon: '',
     backgroundColor: '#1a0f0a',
     pointDefaultColor: '#ff6b35',
     nodeSize: 4.5,
-    linkWidth: 1.5,
-    spaceSize: 4096,
-    simulationFriction: 0.18,
-    simulationGravity: 0.35,
-    simulationRepulsion: 0.55,
-    simulationLinkSpring: 0.9,
+    linkWidth: 1.0,
+    spaceSize: 3072,
+    simulationFriction: 0.3,
+    simulationGravity: 0.4,
+    simulationRepulsion: 0.5,
+    simulationLinkSpring: 0.8,
     curvedLinks: true,
     scalePointsOnZoom: true,
     getNodeColor: (node, index) => {
@@ -121,16 +121,16 @@ export const networkConfigs = [
   {
     name: 'Modular Network',
     description: 'Community-based structure with dense clusters. Strong intra-community and weak inter-community connections.',
-    icon: '🔷',
+    icon: '',
     backgroundColor: '#1a0a1a',
     pointDefaultColor: '#ff00ff',
     nodeSize: 3.8,
-    linkWidth: 1.1,
-    spaceSize: 4096,
-    simulationFriction: 0.14,
-    simulationGravity: 0.15,
-    simulationRepulsion: 0.7,
-    simulationLinkSpring: 0.75,
+    linkWidth: 0.8,
+    spaceSize: 3072,
+    simulationFriction: 0.26,
+    simulationGravity: 0.25, // Increased to keep centered
+    simulationRepulsion: 0.65,
+    simulationLinkSpring: 0.65,
     curvedLinks: true,
     scalePointsOnZoom: true,
     getNodeColor: (node, index) => {
@@ -170,16 +170,16 @@ export const networkConfigs = [
   {
     name: 'Ring Network',
     description: 'Circular topology with nearest-neighbor connections. Additional skip connections create shortcuts.',
-    icon: '⭕',
+    icon: '',
     backgroundColor: '#0a0a0a',
     pointDefaultColor: '#ff0080',
     nodeSize: 3.2,
-    linkWidth: 1.0,
-    spaceSize: 3584,
-    simulationFriction: 0.16,
-    simulationGravity: 0.25,
-    simulationRepulsion: 0.65,
-    simulationLinkSpring: 0.85,
+    linkWidth: 0.7,
+    spaceSize: 2560,
+    simulationFriction: 0.28,
+    simulationGravity: 0.35, // Increased to keep centered
+    simulationRepulsion: 0.6,
+    simulationLinkSpring: 0.75,
     curvedLinks: false,
     scalePointsOnZoom: true,
     getNodeColor: (node, index, total) => {
@@ -196,22 +196,22 @@ export const networkConfigs = [
   {
     name: 'Grid Network',
     description: '2D grid structure with regular connectivity. Diagonal connections add complexity to the lattice.',
-    icon: '📐',
+    icon: '',
     backgroundColor: '#000814',
     pointDefaultColor: '#00f5ff',
     nodeSize: 3.5,
-    linkWidth: 0.9,
-    spaceSize: 4096,
-    simulationFriction: 0.22,
-    simulationGravity: 0.45,
-    simulationRepulsion: 0.45,
-    simulationLinkSpring: 1.0,
+    linkWidth: 0.7,
+    spaceSize: 3072,
+    simulationFriction: 0.3,
+    simulationGravity: 0.55, // Increased to keep centered
+    simulationRepulsion: 0.4,
+    simulationLinkSpring: 0.9,
     curvedLinks: false,
     scalePointsOnZoom: true,
     getNodeColor: (node, index) => {
       // Checkerboard pattern with neon colors
-      const x = index % 40;
-      const y = Math.floor(index / 40);
+      const x = index % 30;
+      const y = Math.floor(index / 30);
       const pattern = (x + y) % 2;
       if (pattern === 0) {
         return [0, 245, 255, 255]; // Cyan
@@ -226,16 +226,16 @@ export const networkConfigs = [
   {
     name: 'Bipartite Network',
     description: 'Two distinct node groups with cross-connections. Minimal connections within groups.',
-    icon: '⚖️',
+    icon: '',
     backgroundColor: '#1a0a2a',
     pointDefaultColor: '#ff00ff',
     nodeSize: 4.0,
-    linkWidth: 1.2,
-    spaceSize: 4096,
-    simulationFriction: 0.14,
-    simulationGravity: 0,
-    simulationRepulsion: 0.75,
-    simulationLinkSpring: 0.65,
+    linkWidth: 0.6, // Thinner links for better performance
+    spaceSize: 3072,
+    simulationFriction: 0.26,
+    simulationGravity: 0.1, // Minimum to prevent drift
+    simulationRepulsion: 0.7,
+    simulationLinkSpring: 0.6,
     curvedLinks: true,
     scalePointsOnZoom: true,
     getNodeColor: (node, index) => {
@@ -253,16 +253,16 @@ export const networkConfigs = [
   {
     name: 'Star Network',
     description: 'Central hub with many peripheral nodes. Hub-and-spoke topology with high centralization.',
-    icon: '⭐',
+    icon: '',
     backgroundColor: '#1a0a0a',
     pointDefaultColor: '#ffd700',
     nodeSize: (node) => node.group === 0 ? 8 : 3,
-    linkWidth: 1.3,
-    spaceSize: 4096,
-    simulationFriction: 0.16,
-    simulationGravity: 0.35,
-    simulationRepulsion: 0.65,
-    simulationLinkSpring: 0.85,
+    linkWidth: 1.0,
+    spaceSize: 3072,
+    simulationFriction: 0.28,
+    simulationGravity: 0.45, // Increased to keep centered
+    simulationRepulsion: 0.6,
+    simulationLinkSpring: 0.75,
     curvedLinks: true,
     scalePointsOnZoom: true,
     getNodeColor: (node, index) => {
@@ -280,16 +280,16 @@ export const networkConfigs = [
   {
     name: 'Hybrid Network',
     description: 'Combination of multiple network types. Scale-free core with modular communities and random connections.',
-    icon: '🔀',
+    icon: '',
     backgroundColor: '#0a0a1a',
     pointDefaultColor: '#ff00ff',
     nodeSize: 3.6,
-    linkWidth: 1.0,
-    spaceSize: 5120,
-    simulationFriction: 0.12,
-    simulationGravity: 0.15,
-    simulationRepulsion: 0.7,
-    simulationLinkSpring: 0.65,
+    linkWidth: 0.7,
+    spaceSize: 3584,
+    simulationFriction: 0.25,
+    simulationGravity: 0.25, // Increased to keep centered
+    simulationRepulsion: 0.65,
+    simulationLinkSpring: 0.6,
     curvedLinks: true,
     scalePointsOnZoom: true,
     getNodeColor: (node, index) => {
