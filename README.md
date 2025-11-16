@@ -5,7 +5,7 @@
      </div>
     <br>
 
-An interactive web application featuring 10 highly complex and massive network visualizations built with [cosmos.gl](https://github.com/cosmosgl/graph), a GPU-accelerated graph visualization library.
+An interactive web application featuring 10 network visualizations built with [cosmos.gl](https://github.com/cosmosgl/graph), a GPU-accelerated graph visualization library.
 
 ## Network Types
 
